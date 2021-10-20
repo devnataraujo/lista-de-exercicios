@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        Frase: <input maxlength="200" onkeyup="transformar()" id="texto">
+        <div id="aviso"></div>
+        <!--
+            keydown: execua o programa quando termina de digitar (quando apero ela)
+            keyup: quando eu solto a tecla
+
+        -->
+        <p>Primeira letra: <span id="primeira_letra"></span> </p>
+        <p>Última letra: <span id="ultima_letra"></span> </p>
+        <p>Email válido: <span id="email_valido"></span> </p>
+        <p>Começa com a?: <span id="comeca_a"></span> </p>
+        <p>Termina com .com.br?: <span id="pontocombr"></span> </p>
+        <p>Frase, em minusculo: <span id="frase_minusculo"></span> </p>
+        <p>Frase em maiusculo: <span id="frase_maiusculo"></span> </p>
+    </body>
+</html>
+<script>
+    //function
+    function transformar(){
+        //variaveis 
+        var campo = (texto.value.trim()).toLowerCase();
+        var first = texto.value[0];
+        var count = campo.length;
+        var ultima = texto.value[count-1];
+        var tem_arroba = campo.indexOf("@") > -1;
+        var tem_ponto = campo.indexOf(".com") > -1;
+        var letra_a = campo.indexOf("a");
+        var ponto_com_br = campo.endsWith(".com.br");// startsWith - começa com
+        var maiusculo = campo.toUpperCase();;
+        /*
+            trimEnd = para tirar espaços em branco no final
+            trimStart = pra tirar caracteres no começo
+            intercambiaveis - trocar uma coisa pela outra que vai dar na mesma
+        */
+        //exibição
+        primeira_letra.innerHTML = `${first}`;
+        ultima_letra.innerHTML = `${ultima}`;
+
+        // verficação email
+        if(tem_arroba){
+            if(tem_ponto){
+                email_valido.innerHTML = "Email Válido";
+            }
+            else{
+                email_valido.innerHTML = "Email inválido";
+            }
+        }
+        else{
+            email_valido.innerHTML = "Email inválido";
+        }
+        // verificação letra a
+        if(letra_a == 0){
+            comeca_a.innerHTML = "Sim";
+        }
+        else{
+            comeca_a.innerHTML = "Não";
+        }
+        // verificação .com.br
+        if(ponto_com_br){
+            pontocombr.innerHTML = "Sim";
+        }
+        else{
+            pontocombr.innerHTML = "Não";
+        }
+        // exibição minusculo e maiusculo
+        frase_minusculo.innerHTML = `${campo}`;
+        frase_maiusculo.innerHTML = `${maiusculo}`;
+
+        //validação local
+        if(campo.endsWith("@")){
+            aviso.innerHTML = "<p>@ no final amigão?</p>";
+        }
+        else if(campo.startsWith("@")){
+            aviso.innerHTML = "<p>@ no começo amigão?</p>";
+        }
+        else if(campo.startsWith(".com.br")){
+            aviso.innerHTML = "<p>.com.br no começo amigão?</p>";
+        }
+    }
+</script>
+
